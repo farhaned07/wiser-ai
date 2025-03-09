@@ -3,16 +3,22 @@ import Redis from 'ioredis';
 // Initialize Redis client with fallback to mock implementation if connection fails
 let redis: Redis | null = null;
 
-try {
-  redis = new Redis(process.env.REDIS_URL || '');
-  
-  // Handle connection errors
-  redis.on('error', (error) => {
-    console.warn('Redis connection error:', error.message);
-    // Don't log the full error stack trace to reduce console noise
-  });
-} catch (error) {
-  console.warn('Failed to initialize Redis:', error);
+// Only attempt to connect if REDIS_URL is defined
+if (process.env.REDIS_URL) {
+  try {
+    redis = new Redis(process.env.REDIS_URL);
+    
+    // Handle connection errors
+    redis.on('error', (error) => {
+      console.warn('Redis connection error:', error.message);
+      // Don't log the full error stack trace to reduce console noise
+    });
+  } catch (error) {
+    console.warn('Failed to initialize Redis:', error);
+    redis = null;
+  }
+} else {
+  console.info('Redis URL not provided, running without Redis cache');
 }
 
 /**
