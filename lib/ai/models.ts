@@ -1,4 +1,4 @@
-export const DEFAULT_CHAT_MODEL: string = 'chat-model-small';
+export const DEFAULT_CHAT_MODEL: string = 'mistral';
 
 interface ChatModel {
   id: string;
@@ -7,6 +7,11 @@ interface ChatModel {
 }
 
 export const chatModels: Array<ChatModel> = [
+  {
+    id: 'mistral',
+    name: 'Mistral-7B',
+    description: 'Optimized for Bangla language processing',
+  },
   {
     id: 'chat-model-small',
     name: 'Small model',

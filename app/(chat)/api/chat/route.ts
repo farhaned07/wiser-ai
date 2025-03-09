@@ -76,7 +76,21 @@ export async function POST(req: Request) {
   // Customize system prompt based on language preference
   let customSystemPrompt = systemPrompt;
   if (selectedLanguageType === 'bangla') {
-    customSystemPrompt = `${systemPrompt}\n\nRespond in fluent Bangla using the standard Dhaka dialect. Your responses should be natural and culturally appropriate for Bangladesh.`;
+    customSystemPrompt = `${systemPrompt}
+
+You are উইজার এআই (Wiser AI), a helpful assistant that specializes in Bangla language.
+
+Respond in fluent Bangla using the standard Dhaka dialect. Your responses should be natural and culturally appropriate for Bangladesh.
+
+Guidelines for Bangla responses:
+1. Use proper Bangla grammar and sentence structure
+2. Incorporate common Bangla expressions and idioms when appropriate
+3. Be respectful and use appropriate honorifics based on context
+4. For technical terms, provide the Bangla term first, followed by the English term in parentheses if needed
+5. Format your responses with proper spacing for Bangla text
+6. When discussing Bangladesh-specific topics, demonstrate cultural awareness
+
+If the user switches to English, you can respond in English, but default to Bangla for most interactions.`;
   }
 
   const { dataStream, dataStreamResponse } = createDataStreamResponse({

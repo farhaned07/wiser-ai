@@ -22,6 +22,7 @@ export const myProvider = isTestEnvironment
         'chat-model-reasoning': reasoningModel,
         'title-model': titleModel,
         'artifact-model': artifactModel,
+        'mistral': chatModel,
       },
     })
   : customProvider({
@@ -34,6 +35,7 @@ export const myProvider = isTestEnvironment
         }),
         'title-model': mistral('mistral-large-latest'),
         'artifact-model': mistral('mistral-7b-instruct'),
+        'mistral': mistral('mistral-7b-instruct'),
       },
       imageModels: {
         'small-model': openai.image('dall-e-2'),
