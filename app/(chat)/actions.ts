@@ -10,6 +10,7 @@ import {
 } from '@/lib/db/queries';
 import { VisibilityType } from '@/components/visibility-selector';
 import { myProvider } from '@/lib/ai/providers';
+import { LanguageType } from '@/components/language-selector';
 
 export async function saveChatModelAsCookie(model: string) {
   const cookieStore = await cookies();
@@ -51,4 +52,10 @@ export async function updateChatVisibility({
   visibility: VisibilityType;
 }) {
   await updateChatVisiblityById({ chatId, visibility });
+}
+
+export async function saveLanguagePreferenceCookie(languageType: LanguageType) {
+  cookies().set('language-preference', languageType, {
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
+  });
 }

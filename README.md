@@ -1,61 +1,98 @@
-<a href="https://chat.vercel.ai/">
-  <img alt="Next.js 14 and App Router-ready AI chatbot." src="app/(chat)/opengraph-image.png">
-  <h1 align="center">Next.js AI Chatbot</h1>
-</a>
+# Bangla-English AI Chatbot with bKash Payment
 
-<p align="center">
-  An Open-Source AI Chatbot Template Built With Next.js and the AI SDK by Vercel.
-</p>
-
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#model-providers"><strong>Model Providers</strong></a> ·
-  <a href="#deploy-your-own"><strong>Deploy Your Own</strong></a> ·
-  <a href="#running-locally"><strong>Running locally</strong></a>
-</p>
-<br/>
+A Next.js-based AI chatbot with Bangla-English language support, user authentication, and bKash payment integration.
 
 ## Features
 
-- [Next.js](https://nextjs.org) App Router
-  - Advanced routing for seamless navigation and performance
-  - React Server Components (RSCs) and Server Actions for server-side rendering and increased performance
-- [AI SDK](https://sdk.vercel.ai/docs)
-  - Unified API for generating text, structured objects, and tool calls with LLMs
-  - Hooks for building dynamic chat and generative user interfaces
-  - Supports OpenAI (default), Anthropic, Cohere, and other model providers
-- [shadcn/ui](https://ui.shadcn.com)
-  - Styling with [Tailwind CSS](https://tailwindcss.com)
-  - Component primitives from [Radix UI](https://radix-ui.com) for accessibility and flexibility
-- Data Persistence
-  - [Vercel Postgres powered by Neon](https://vercel.com/storage/postgres) for saving chat history and user data
-  - [Vercel Blob](https://vercel.com/storage/blob) for efficient file storage
-- [NextAuth.js](https://github.com/nextauthjs/next-auth)
-  - Simple and secure authentication
+- **Dual Language Support**: Seamlessly switch between Bangla and English
+- **User Authentication**: Secure login with Google OAuth and email/password
+- **Premium Subscriptions**: bKash payment integration for premium features
+- **Responsive UI**: Mobile-friendly interface with modern design
+- **Performance Optimized**: Redis caching and Vercel Edge Functions
 
-## Model Providers
+## Tech Stack
 
-This template ships with OpenAI `gpt-4o` as the default. However, with the [AI SDK](https://sdk.vercel.ai/docs), you can switch LLM providers to [OpenAI](https://openai.com), [Anthropic](https://anthropic.com), [Cohere](https://cohere.com/), and [many more](https://sdk.vercel.ai/providers/ai-sdk-providers) with just a few lines of code.
+- **Frontend**: Next.js 14, React, Tailwind CSS, Framer Motion
+- **Backend**: Next.js API Routes, Vercel Edge Functions
+- **Database**: PostgreSQL with Drizzle ORM
+- **Authentication**: NextAuth.js
+- **AI**: Mistral 7B API
+- **Caching**: Redis (optional)
+- **Payment**: bKash Payment Gateway
+- **Deployment**: Vercel
 
-## Deploy Your Own
+## Getting Started
 
-You can deploy your own version of the Next.js AI Chatbot to Vercel with one click:
+### Prerequisites
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-chatbot&env=AUTH_SECRET,OPENAI_API_KEY&envDescription=Learn%20more%20about%20how%20to%20get%20the%20API%20Keys%20for%20the%20application&envLink=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-chatbot%2Fblob%2Fmain%2F.env.example&demo-title=AI%20Chatbot&demo-description=An%20Open-Source%20AI%20Chatbot%20Template%20Built%20With%20Next.js%20and%20the%20AI%20SDK%20by%20Vercel.&demo-url=https%3A%2F%2Fchat.vercel.ai&stores=[{%22type%22:%22postgres%22},{%22type%22:%22blob%22}])
+- Node.js 18+ and pnpm
+- PostgreSQL database
+- Redis (optional, for caching)
 
-## Running locally
+### Installation
 
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js AI Chatbot. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/projects/environment-variables) for this, but a `.env` file is all that is necessary.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/bangla-english-ai-chatbot.git
+   cd bangla-english-ai-chatbot
+   ```
 
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control access to your various OpenAI and authentication provider accounts.
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
 
-1. Install Vercel CLI: `npm i -g vercel`
-2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
-3. Download your environment variables: `vercel env pull`
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env.local
+   ```
+   
+   Edit `.env.local` with your API keys and configuration.
 
-```bash
-pnpm install
-pnpm dev
-```
+4. Run database migrations:
+   ```bash
+   pnpm db:migrate
+   ```
 
-Your app template should now be running on [localhost:3000](http://localhost:3000/).
+5. Start the development server:
+   ```bash
+   pnpm dev
+   ```
+
+6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Deployment to Vercel
+
+1. Push your code to GitHub.
+
+2. Create a new project on [Vercel](https://vercel.com).
+
+3. Connect your GitHub repository.
+
+4. Configure the following environment variables in Vercel:
+   - `OPENAI_API_KEY`
+   - `MISTRAL_API_KEY`
+   - `AUTH_SECRET`
+   - `GOOGLE_CLIENT_ID`
+   - `GOOGLE_CLIENT_SECRET`
+   - `BKASH_APP_KEY`
+   - `BKASH_APP_SECRET`
+   - `BKASH_USERNAME`
+   - `BKASH_PASSWORD`
+   - `BKASH_SANDBOX_MODE`
+   - `NEXT_PUBLIC_APP_URL`
+
+5. Add Vercel Postgres and Vercel Blob storage to your project.
+
+6. Deploy your application.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+- [Vercel AI SDK](https://sdk.vercel.ai/)
+- [Next.js](https://nextjs.org/)
+- [Mistral AI](https://mistral.ai/)
+- [bKash Payment Gateway](https://developer.bkash.com/)

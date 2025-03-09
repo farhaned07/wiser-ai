@@ -20,6 +20,7 @@ import {
 } from 'react';
 import { toast } from 'sonner';
 import { useLocalStorage, useWindowSize } from 'usehooks-ts';
+import { StopCircle } from 'lucide-react';
 
 import { sanitizeUIMessages } from '@/lib/utils';
 
@@ -233,49 +234,67 @@ function PureMultimodalInput({
         </div>
       )}
 
-      <Textarea
-        data-testid="multimodal-input"
-        ref={textareaRef}
-        placeholder="Send a message..."
-        value={input}
-        onChange={handleInput}
-        className={cx(
-          'min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-2xl !text-base bg-muted pb-10 dark:border-zinc-700',
-          className,
-        )}
-        rows={2}
-        autoFocus
-        onKeyDown={(event) => {
-          if (
-            event.key === "Enter" &&
-            !event.shiftKey &&
-            !event.nativeEvent.isComposing
-          ) {
-            event.preventDefault();
+      <div className="relative flex w-full items-center">
+        <div className="flex-grow relative">
+          <Textarea
+            data-testid="multimodal-input"
+            ref={textareaRef}
+            placeholder="Send a message..."
+            value={input}
+            onChange={handleInput}
+            className={cx(
+              'min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-2xl !text-base bg-muted pb-10 dark:border-zinc-700',
+              className,
+            )}
+            rows={2}
+            autoFocus
+            onKeyDown={(event) => {
+              if (
+                event.key === "Enter" &&
+                !event.shiftKey &&
+                !event.nativeEvent.isComposing
+              ) {
+                event.preventDefault();
 
-            if (isLoading) {
-              toast.error('Please wait for the model to finish its response!');
-            } else {
-              submitForm();
-            }
-          }
-        }}
-      />
+                if (isLoading) {
+                  toast.error('Please wait for the model to finish its response!');
+                } else {
+                  submitForm();
+                }
+              }
+            }}
+          />
+        </div>
+
+        <div className="absolute right-2 flex items-center">
+          {isLoading ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-red-500 hover:text-red-600"
+              onClick={() => stop()}
+              title="Stop generating"
+            >
+              <StopCircle className="h-5 w-5" />
+              <span className="sr-only">Stop generating</span>
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              size="icon"
+              disabled={isLoading || input === ''}
+              className="h-8 w-8"
+            >
+              <ArrowUpIcon className="h-5 w-5" />
+              <span className="sr-only">Send message</span>
+            </Button>
+          )}
+        </div>
+      </div>
 
       <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
         <AttachmentsButton fileInputRef={fileInputRef} isLoading={isLoading} />
-      </div>
-
-      <div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
-        {isLoading ? (
-          <StopButton stop={stop} setMessages={setMessages} />
-        ) : (
-          <SendButton
-            input={input}
-            submitForm={submitForm}
-            uploadQueue={uploadQueue}
-          />
-        )}
       </div>
     </div>
   );

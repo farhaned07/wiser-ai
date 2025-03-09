@@ -12,16 +12,19 @@ import { useSidebar } from './ui/sidebar';
 import { memo } from 'react';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { VisibilityType, VisibilitySelector } from './visibility-selector';
+import { LanguageType, LanguageSelector } from './language-selector';
 
 function PureChatHeader({
   chatId,
   selectedModelId,
   selectedVisibilityType,
+  selectedLanguageType,
   isReadonly,
 }: {
   chatId: string;
   selectedModelId: string;
   selectedVisibilityType: VisibilityType;
+  selectedLanguageType: LanguageType;
   isReadonly: boolean;
 }) {
   const router = useRouter();
@@ -67,6 +70,11 @@ function PureChatHeader({
         />
       )}
 
+      <LanguageSelector
+        selectedLanguageType={selectedLanguageType}
+        className="order-1 md:order-4"
+      />
+
       <Button
         className="bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 text-zinc-50 dark:text-zinc-900 hidden md:flex py-1.5 px-2 h-fit md:h-[34px] order-4 md:ml-auto"
         asChild
@@ -84,5 +92,12 @@ function PureChatHeader({
 }
 
 export const ChatHeader = memo(PureChatHeader, (prevProps, nextProps) => {
-  return prevProps.selectedModelId === nextProps.selectedModelId;
+  if (prevProps.selectedModelId !== nextProps.selectedModelId) return false;
+  if (prevProps.selectedVisibilityType !== nextProps.selectedVisibilityType)
+    return false;
+  if (prevProps.selectedLanguageType !== nextProps.selectedLanguageType)
+    return false;
+  if (prevProps.isReadonly !== nextProps.isReadonly) return false;
+
+  return true;
 });

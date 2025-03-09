@@ -5,6 +5,7 @@ import {
 } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { fireworks } from '@ai-sdk/fireworks';
+import { mistral } from '@ai-sdk/mistral';
 import { isTestEnvironment } from '../constants';
 import {
   artifactModel,
@@ -25,14 +26,14 @@ export const myProvider = isTestEnvironment
     })
   : customProvider({
       languageModels: {
-        'chat-model-small': openai('gpt-4o-mini'),
-        'chat-model-large': openai('gpt-4o'),
+        'chat-model-small': mistral('mistral-7b-instruct'),
+        'chat-model-large': mistral('mistral-large-latest'),
         'chat-model-reasoning': wrapLanguageModel({
-          model: fireworks('accounts/fireworks/models/deepseek-r1'),
+          model: mistral('mistral-7b-instruct'),
           middleware: extractReasoningMiddleware({ tagName: 'think' }),
         }),
-        'title-model': openai('gpt-4-turbo'),
-        'artifact-model': openai('gpt-4o-mini'),
+        'title-model': mistral('mistral-large-latest'),
+        'artifact-model': mistral('mistral-7b-instruct'),
       },
       imageModels: {
         'small-model': openai.image('dall-e-2'),

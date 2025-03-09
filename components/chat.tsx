@@ -11,6 +11,7 @@ import { Artifact } from './artifact';
 import { MultimodalInput } from './multimodal-input';
 import { Messages } from './messages';
 import { VisibilityType } from './visibility-selector';
+import { LanguageType } from './language-selector';
 import { useArtifactSelector } from '@/hooks/use-artifact';
 import { toast } from 'sonner';
 
@@ -19,12 +20,14 @@ export function Chat({
   initialMessages,
   selectedChatModel,
   selectedVisibilityType,
+  selectedLanguageType,
   isReadonly,
 }: {
   id: string;
   initialMessages: Array<Message>;
   selectedChatModel: string;
   selectedVisibilityType: VisibilityType;
+  selectedLanguageType: LanguageType;
   isReadonly: boolean;
 }) {
   const { mutate } = useSWRConfig();
@@ -41,7 +44,11 @@ export function Chat({
     reload,
   } = useChat({
     id,
-    body: { id, selectedChatModel: selectedChatModel },
+    body: { 
+      id, 
+      selectedChatModel: selectedChatModel,
+      selectedLanguageType: selectedLanguageType
+    },
     initialMessages,
     experimental_throttle: 100,
     sendExtraMessageFields: true,
@@ -69,6 +76,7 @@ export function Chat({
           chatId={id}
           selectedModelId={selectedChatModel}
           selectedVisibilityType={selectedVisibilityType}
+          selectedLanguageType={selectedLanguageType}
           isReadonly={isReadonly}
         />
 

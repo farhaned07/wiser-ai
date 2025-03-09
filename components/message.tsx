@@ -18,6 +18,9 @@ import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import { MessageEditor } from './message-editor';
 import { DocumentPreview } from './document-preview';
 import { MessageReasoning } from './message-reasoning';
+import { MemoizedReactMarkdown } from './memoized-react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 
 const PurePreviewMessage = ({
   chatId,
@@ -118,7 +121,25 @@ const PurePreviewMessage = ({
                       message.role === 'user',
                   })}
                 >
-                  <Markdown>{message.content as string}</Markdown>
+                  <MemoizedReactMarkdown
+                    className={cn(
+                      'prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0 max-w-none',
+                      'prose-code:before:hidden prose-code:after:hidden',
+                      'font-feature-settings-normal text-rendering-optimizeLegibility',
+                    )}
+                    remarkPlugins={[remarkGfm, remarkMath]}
+                    components={{
+                      p({ children }) {
+                        return (
+                          <p className="mb-2 last:mb-0 overflow-x-auto whitespace-pre-wrap break-words" dir="auto">
+                            {children}
+                          </p>
+                        );
+                      },
+                    }}
+                  >
+                    {message.content}
+                  </MemoizedReactMarkdown>
                 </div>
               </div>
             )}
