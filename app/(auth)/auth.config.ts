@@ -1,11 +1,11 @@
 import { NextAuthConfig } from 'next-auth';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import { db } from '@/lib/db';
+import { db } from '../../lib/db';
 import Credentials from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
 import Email from 'next-auth/providers/email';
 import { compare } from 'bcrypt-ts';
-import { getUserByEmail } from '@/lib/db/queries';
+import { getUserByEmail } from '../../lib/db/queries';
 
 // Create a mock adapter when the database is not available
 const getAdapter = () => {
@@ -32,7 +32,8 @@ export const authConfig = {
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
-    Email({
+    // Temporarily comment out Email provider to avoid nodemailer issues
+    /* Email({
       server: {
         host: process.env.EMAIL_SERVER_HOST || '',
         port: Number(process.env.EMAIL_SERVER_PORT) || 587,
@@ -42,7 +43,7 @@ export const authConfig = {
         },
       },
       from: process.env.EMAIL_FROM || 'noreply@example.com',
-    }),
+    }), */
     Credentials({
       name: 'credentials',
       credentials: {
