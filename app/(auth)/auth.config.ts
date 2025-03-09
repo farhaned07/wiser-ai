@@ -3,7 +3,8 @@ import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { db } from '../../lib/db';
 import Credentials from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
-import Email from 'next-auth/providers/email';
+// Remove Email provider to avoid nodemailer issues
+// import Email from 'next-auth/providers/email';
 import { compare } from 'bcrypt-ts';
 import { getUserByEmail } from '../../lib/db/queries';
 
@@ -32,18 +33,7 @@ export const authConfig = {
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
-    // Temporarily comment out Email provider to avoid nodemailer issues
-    /* Email({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST || '',
-        port: Number(process.env.EMAIL_SERVER_PORT) || 587,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER || '',
-          pass: process.env.EMAIL_SERVER_PASSWORD || '',
-        },
-      },
-      from: process.env.EMAIL_FROM || 'noreply@example.com',
-    }), */
+    // Email provider removed to avoid nodemailer issues
     Credentials({
       name: 'credentials',
       credentials: {
