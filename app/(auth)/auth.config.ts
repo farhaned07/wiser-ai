@@ -1,11 +1,11 @@
 import { NextAuthConfig } from 'next-auth';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import { db } from '../lib/db';
+import { db } from '@/lib/db';
 import Credentials from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
 import Email from 'next-auth/providers/email';
 import { compare } from 'bcrypt-ts';
-import { getUserByEmail } from '../lib/db/queries';
+import { getUserByEmail } from '@/lib/db/queries';
 
 // Create a mock adapter when the database is not available
 const getAdapter = () => {

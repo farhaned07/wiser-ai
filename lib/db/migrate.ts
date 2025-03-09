@@ -3,30 +3,43 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import { migrate } from 'drizzle-orm/postgres-js/migrator';
 import postgres from 'postgres';
 
-// Load environment variables from .env.local if it exists
+// Try to load environment variables from .env.local or .env
 try {
   config({
     path: '.env.local',
   });
 } catch (error) {
-  console.log('No .env.local file found, using environment variables');
+  try {
+    config({
+      path: '.env',
+    });
+  } catch (error) {
+    console.log('No .env or .env.local file found, using environment variables');
+  }
 }
 
 const runMigrate = async () => {
-  if (!process.env.POSTGRES_URL) {
-    console.error('POSTGRES_URL is not defined');
+  // Check for Vercel Postgres environment variables
+  const postgresUrl = process.env.POSTGRES_URL || 
+                      process.env.DATABASE_URL || 
+                      process.env.POSTGRES_PRISMA_URL;
+  
+  if (!postgresUrl) {
+    console.error('No database URL found. Checking for POSTGRES_URL, DATABASE_URL, or POSTGRES_PRISMA_URL');
     
     // In production, this is a critical error
     if (process.env.NODE_ENV === 'production') {
       throw new Error('POSTGRES_URL is not defined');
     } else {
       // In development, we can exit more gracefully
-      console.warn('Skipping database migrations due to missing POSTGRES_URL');
+      console.warn('Skipping database migrations due to missing database URL');
       process.exit(0);
     }
   }
 
-  const connection = postgres(process.env.POSTGRES_URL, { max: 1 });
+  console.log('Using database URL:', postgresUrl.replace(/:[^:]*@/, ':****@')); // Log URL with password hidden
+
+  const connection = postgres(postgresUrl, { max: 1 });
   const db = drizzle(connection);
 
   console.log('⏳ Running migrations...');
