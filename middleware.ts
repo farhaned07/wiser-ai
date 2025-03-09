@@ -4,7 +4,7 @@ import { auth } from './app/(auth)/auth';
 
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-  runtime: 'edge',
+  runtime: 'experimental-edge',
 };
 
 export default async function middleware(request: NextRequest) {
@@ -23,7 +23,9 @@ export default async function middleware(request: NextRequest) {
   // Add user information if authenticated
   if (session?.user) {
     requestHeaders.set('x-user-id', session.user.id);
-    requestHeaders.set('x-user-email', session.user.email || '');
+    if (session.user.email) {
+      requestHeaders.set('x-user-email', session.user.email);
+    }
   }
 
   // Protect premium routes
