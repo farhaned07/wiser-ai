@@ -16,24 +16,24 @@ interface SuggestedActionsProps {
 function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'What are the advantages',
-      label: 'of using Next.js?',
-      action: 'What are the advantages of using Next.js?',
+      title: 'বাংলা ভাষার ইতিহাস',
+      label: 'সম্পর্কে আমাকে বলুন',
+      action: 'বাংলা ভাষার ইতিহাস সম্পর্কে আমাকে বলুন',
     },
     {
-      title: 'Write code to',
-      label: `demonstrate djikstra's algorithm`,
-      action: `Write code to demonstrate djikstra's algorithm`,
+      title: 'বাংলাদেশের পর্যটন স্থান',
+      label: 'সম্পর্কে তথ্য দিন',
+      action: 'বাংলাদেশের জনপ্রিয় পর্যটন স্থান সম্পর্কে তথ্য দিন',
     },
     {
-      title: 'Help me write an essay',
-      label: `about silicon valley`,
-      action: `Help me write an essay about silicon valley`,
+      title: 'বাংলা ভাষায় একটি কবিতা',
+      label: 'লিখে দিন',
+      action: 'বাংলা ভাষায় প্রকৃতি বিষয়ক একটি ছোট কবিতা লিখে দিন',
     },
     {
-      title: 'What is the weather',
-      label: 'in San Francisco?',
-      action: 'What is the weather in San Francisco?',
+      title: 'বাংলাদেশের ঐতিহাসিক স্থান',
+      label: 'সম্পর্কে জানতে চাই',
+      action: 'বাংলাদেশের ঐতিহাসিক স্থান সম্পর্কে জানতে চাই',
     },
   ];
 
@@ -61,7 +61,7 @@ function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
                 content: suggestedAction.action,
               });
             }}
-            className="text-left border rounded-xl px-4 py-3.5 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start"
+            className="text-left border rounded-xl px-4 py-3.5 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start bangla-text"
           >
             <span className="font-medium">{suggestedAction.title}</span>
             <span className="text-muted-foreground">

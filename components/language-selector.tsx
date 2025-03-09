@@ -25,16 +25,16 @@ const languages: Array<{
 }> = [
   {
     id: 'bangla',
-    label: 'Bangla',
+    label: 'বাংলা',
     nativeLabel: 'বাংলা',
-    description: 'Switch to Bangla language',
+    description: 'বাংলা ভাষায় স্যুইচ করুন',
     icon: <GlobeIcon />,
   },
   {
     id: 'english',
-    label: 'English',
+    label: 'ইংরেজি',
     nativeLabel: 'English',
-    description: 'Switch to English language',
+    description: 'ইংরেজি ভাষায় স্যুইচ করুন',
     icon: <GlobeIcon />,
   },
 ];
@@ -65,7 +65,7 @@ export function LanguageSelector({
       >
         <Button
           variant="outline"
-          className="hidden md:flex md:px-2 md:h-[34px]"
+          className="hidden md:flex md:px-2 md:h-[34px] bangla-text"
         >
           {selectedLanguage?.icon}
           {selectedLanguage?.nativeLabel}
@@ -73,7 +73,7 @@ export function LanguageSelector({
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="start" className="min-w-[300px]">
+      <DropdownMenuContent align="start" className="min-w-[300px] bangla-text">
         {languages.map((language) => (
           <DropdownMenuItem
             key={language.id}

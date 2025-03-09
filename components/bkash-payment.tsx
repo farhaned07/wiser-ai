@@ -18,37 +18,37 @@ import { toast } from 'sonner';
 const PREMIUM_PLANS = [
   {
     id: 'basic',
-    name: 'Basic',
+    name: 'বেসিক',
     price: 199,
     features: [
-      'Unlimited conversations',
-      'Advanced Bangla responses',
-      'File uploads up to 5MB',
+      'অসীমিত কথোপকথন',
+      'উন্নত বাংলা প্রতিক্রিয়া',
+      '৫ এমবি পর্যন্ত ফাইল আপলোড',
     ],
     durationDays: 30,
   },
   {
     id: 'pro',
-    name: 'Professional',
+    name: 'প্রফেশনাল',
     price: 499,
     features: [
-      'All Basic features',
-      'Priority response time',
-      'File uploads up to 20MB',
-      'Custom Bangla dialect options',
+      'সমস্ত বেসিক বৈশিষ্ট্য',
+      'অগ্রাধিকার প্রতিক্রিয়া সময়',
+      '২০ এমবি পর্যন্ত ফাইল আপলোড',
+      'কাস্টম বাংলা ডায়ালেক্ট অপশন',
     ],
     durationDays: 30,
   },
   {
     id: 'enterprise',
-    name: 'Enterprise',
+    name: 'এন্টারপ্রাইজ',
     price: 999,
     features: [
-      'All Professional features',
-      'Dedicated support',
-      'API access',
-      'Custom branding',
-      'Unlimited file uploads',
+      'সমস্ত প্রফেশনাল বৈশিষ্ট্য',
+      'ডেডিকেটেড সাপোর্ট',
+      'এপিআই অ্যাক্সেস',
+      'কাস্টম ব্র্যান্ডিং',
+      'অসীমিত ফাইল আপলোড',
     ],
     durationDays: 30,
   },
@@ -72,7 +72,7 @@ export function BkashPayment({ onSuccess }: BkashPaymentProps) {
   const handlePayment = async () => {
     if (!selectedPlan) return;
     if (!phoneNumber || phoneNumber.length < 11) {
-      toast.error('Please enter a valid bKash number');
+      toast.error('দয়া করে একটি বৈধ বিকাশ নম্বর লিখুন');
       return;
     }
 
@@ -98,11 +98,11 @@ export function BkashPayment({ onSuccess }: BkashPaymentProps) {
         // Redirect to bKash payment page or handle the payment flow
         window.location.href = data.paymentURL;
       } else {
-        toast.error(data.message || 'Payment initiation failed');
+        toast.error(data.message || 'পেমেন্ট শুরু করতে ব্যর্থ হয়েছে');
       }
     } catch (error) {
       console.error('Payment error:', error);
-      toast.error('An error occurred while processing your payment');
+      toast.error('আপনার পেমেন্ট প্রক্রিয়া করার সময় একটি ত্রুটি ঘটেছে');
     } finally {
       setIsProcessing(false);
     }
@@ -111,25 +111,25 @@ export function BkashPayment({ onSuccess }: BkashPaymentProps) {
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-center mb-6">Premium Plans</h2>
+        <h2 className="text-2xl font-bold text-center mb-6 bangla-text">প্রিমিয়াম প্ল্যান</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {PREMIUM_PLANS.map((plan) => (
             <div
               key={plan.id}
-              className="border rounded-lg p-6 flex flex-col bg-card"
+              className="border rounded-lg p-6 flex flex-col bg-card hover:shadow-md transition-shadow duration-300"
             >
-              <h3 className="text-xl font-semibold">{plan.name}</h3>
+              <h3 className="text-xl font-semibold bangla-text">{plan.name}</h3>
               <div className="text-2xl font-bold my-4">
                 ৳{plan.price}
-                <span className="text-sm font-normal text-muted-foreground">
-                  /{plan.durationDays} days
+                <span className="text-sm font-normal text-muted-foreground bangla-text">
+                  /{plan.durationDays} দিন
                 </span>
               </div>
               <ul className="mb-6 flex-grow">
                 {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-center mb-2">
+                  <li key={index} className="flex items-center mb-2 bangla-text">
                     <svg
-                      className="w-4 h-4 mr-2 text-green-500"
+                      className="w-4 h-4 mr-2 text-primary"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -148,9 +148,9 @@ export function BkashPayment({ onSuccess }: BkashPaymentProps) {
               </ul>
               <Button
                 onClick={() => handleOpenPayment(plan)}
-                className="w-full bg-pink-600 hover:bg-pink-700"
+                className="w-full bg-pink-600 hover:bg-pink-700 bangla-text"
               >
-                Subscribe with bKash
+                বিকাশ দিয়ে সাবস্ক্রাইব করুন
               </Button>
             </div>
           ))}
@@ -160,20 +160,20 @@ export function BkashPayment({ onSuccess }: BkashPaymentProps) {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>bKash Payment</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="bangla-text">বিকাশ পেমেন্ট</DialogTitle>
+            <DialogDescription className="bangla-text">
               {selectedPlan && (
                 <>
-                  You are subscribing to the {selectedPlan.name} plan for ৳
-                  {selectedPlan.price}.
+                  আপনি {selectedPlan.name} প্ল্যানে সাবস্ক্রাইব করছেন ৳
+                  {selectedPlan.price} টাকায়।
                 </>
               )}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="phone" className="text-right">
-                bKash Number
+              <Label htmlFor="phone" className="text-right bangla-text">
+                বিকাশ নম্বর
               </Label>
               <Input
                 id="phone"
@@ -189,9 +189,9 @@ export function BkashPayment({ onSuccess }: BkashPaymentProps) {
               type="submit"
               onClick={handlePayment}
               disabled={isProcessing}
-              className="bg-pink-600 hover:bg-pink-700"
+              className="bg-pink-600 hover:bg-pink-700 bangla-text"
             >
-              {isProcessing ? 'Processing...' : 'Pay with bKash'}
+              {isProcessing ? 'প্রক্রিয়াকরণ হচ্ছে...' : 'বিকাশ দিয়ে পেমেন্ট করুন'}
             </Button>
           </DialogFooter>
         </DialogContent>

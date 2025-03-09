@@ -28,14 +28,14 @@ const visibilities: Array<{
 }> = [
   {
     id: 'private',
-    label: 'Private',
-    description: 'Only you can access this chat',
+    label: 'প্রাইভেট',
+    description: 'শুধুমাত্র আপনি এই চ্যাট অ্যাক্সেস করতে পারবেন',
     icon: <LockIcon />,
   },
   {
     id: 'public',
-    label: 'Public',
-    description: 'Anyone with the link can access this chat',
+    label: 'পাবলিক',
+    description: 'লিঙ্ক সহ যে কেউ এই চ্যাট অ্যাক্সেস করতে পারবে',
     icon: <GlobeIcon />,
   },
 ];
@@ -71,7 +71,7 @@ export function VisibilitySelector({
       >
         <Button
           variant="outline"
-          className="hidden md:flex md:px-2 md:h-[34px]"
+          className="hidden md:flex md:px-2 md:h-[34px] bangla-text"
         >
           {selectedVisibility?.icon}
           {selectedVisibility?.label}
@@ -79,7 +79,7 @@ export function VisibilitySelector({
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="start" className="min-w-[300px]">
+      <DropdownMenuContent align="start" className="min-w-[300px] bangla-text">
         {visibilities.map((visibility) => (
           <DropdownMenuItem
             key={visibility.id}
