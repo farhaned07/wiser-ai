@@ -2,8 +2,7 @@ import 'server-only';
 
 import { genSaltSync, hashSync } from 'bcrypt-ts';
 import { and, asc, desc, eq, gt, gte, inArray } from 'drizzle-orm';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
+import { db } from './index';
 
 import {
   user,
@@ -22,16 +21,28 @@ import { ArtifactKind } from '@/components/artifact';
 // use the Drizzle adapter for Auth.js / NextAuth
 // https://authjs.dev/reference/adapter/drizzle
 
-// biome-ignore lint: Forbidden non-null assertion.
-const client = postgres(process.env.POSTGRES_URL!);
-const db = drizzle(client);
+// Check if database is available
+const isDatabaseAvailable = !!db;
+
+// Helper function to check database availability
+function checkDb() {
+  if (!db) {
+    throw new Error('Database not available');
+  }
+  return db;
+}
 
 export async function getUser(email: string): Promise<Array<User>> {
   try {
-    return await db.select().from(user).where(eq(user.email, email));
+    if (!isDatabaseAvailable) {
+      console.warn('Database not available, returning empty user array');
+      return [];
+    }
+    
+    return await checkDb().select().from(user).where(eq(user.email, email));
   } catch (error) {
-    console.error('Failed to get user from database');
-    throw error;
+    console.error('Error getting user:', error);
+    return [];
   }
 }
 
